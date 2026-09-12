@@ -197,12 +197,20 @@
   "loginPage": {
     "title": "Вход в личный кабинет",
     "subtitle": "Управляйте своим профилем автомобиля EXELIX",
+    "tabLogin": "Авторизация",
+    "tabRegister": "Регистрация",
     "googleButton": "Войти через Google",
     "redirecting": "Перенаправление...",
     "homeLink": "На главную",
+    "registerTitle": "Регистрация по QR-коду",
+    "registerSubtitle": "Введите токен вашего QR-кода EXELIX для регистрации",
+    "qrInputPlaceholder": "Введите QR-код (например: ABC123XYZ)",
+    "continueRegister": "Продолжить регистрацию",
+    "qrInputEmpty": "Пожалуйста, введите токен QR-кода",
     "errorNoCode": "Код авторизации не получен.",
     "errorTokenExchange": "Не удалось обменять код на токен.",
     "errorProfileFetch": "Не удалось получить профиль пользователя.",
+    "errorUserNotFound": "Аккаунт не найден. Если вы впервые на сервисе, перейдите во вкладку «Регистрация» или введите ваш QR-код.",
     "errorServer": "Произошла ошибка авторизации на сервере."
   },
 

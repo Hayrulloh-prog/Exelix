@@ -1025,7 +1025,7 @@ export function UserDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen hero-gradient flex items-center justify-center">
+      <div className="flex-1 hero-gradient flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
           <p className="text-lg font-normal text-gray-700 dark:text-gray-300">
@@ -1038,7 +1038,7 @@ export function UserDashboard() {
 
   if (!user) {
     return (
-      <div className="min-h-screen hero-gradient flex items-center justify-center p-4">
+      <div className="flex-1 hero-gradient flex items-center justify-center p-4">
         <div className="text-center feature-card max-w-md">
           <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-400" />
