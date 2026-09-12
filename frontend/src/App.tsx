@@ -26,16 +26,13 @@ function PWADetector({ children }: { children: React.ReactNode }) {
       (window.navigator as any).standalone === true ||
       document.referrer.includes('android-app://')
     );
-
     // Check if user has token
     const token = localStorage.getItem('userToken') || localStorage.getItem('token');
-    
     // If running as PWA and user has token, and we are on root, redirect to dashboard
     if (standalone && token && window.location.pathname === '/') {
       navigate('/dashboard', { replace: true });
     }
   }, [navigate]);
-
   return <>{children}</>;
 }
 
@@ -46,7 +43,7 @@ function App() {
       <ThemeProvider>
         <Router>
           <PWADetector>
-          <div className="h-[100dvh] bg-gray-50 dark:bg-gray-900 flex flex-col overflow-hidden">
+            <div className="h-[100dvh] bg-gray-50 dark:bg-gray-900 flex flex-col">
               <Header />
               <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -140,5 +137,4 @@ function App() {
     </I18nextProvider>
   );
 }
-
 export default App;
