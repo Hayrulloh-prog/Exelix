@@ -31,13 +31,20 @@ export function LoginPage() {
 
   const handleGoogleLogin = () => {
     setLoading(true);
-    const backendUrl = import.meta.env.VITE_API_URL || "/api";
+    const apiUrl = import.meta.env.VITE_API_URL || "/api";
     const qrToken = searchParams.get("qrToken");
-    window.location.href = `${backendUrl}/v1/auth/google${qrToken ? `?qrToken=${qrToken}` : ''}`;
+    // Если apiUrl - относительный путь (начинается с /), строим абсолютный URL
+    // чтобы React Router не перехватил переход как клиентский роут
+    const backendUrl = apiUrl.startsWith("http")
+      ? apiUrl
+      : `${window.location.origin}${apiUrl}`;
+    const authUrl = `${backendUrl}/v1/auth/google${qrToken ? `?qrToken=${qrToken}` : ''}`;
+    // Используем assign для полного перехода браузера на бэкенд
+    window.location.assign(authUrl);
   };
 
   return (
-    <div className="flex-1 overflow-y-auto hero-gradient flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+    <div className="flex-1 overflow-y-auto hero-gradient flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8 min-h-0">
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white dark:bg-gray-800 py-6 px-4 shadow-2xl rounded-2xl border border-gray-100 dark:border-gray-700 sm:px-10">
           <div className="text-center">

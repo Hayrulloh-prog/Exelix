@@ -43,8 +43,9 @@ function App() {
       <ThemeProvider>
         <Router>
           <PWADetector>
-            <div className="h-[100dvh] bg-gray-50 dark:bg-gray-900 flex flex-col">
+            <div className="h-[100dvh] bg-gray-50 dark:bg-gray-900 flex flex-col overflow-hidden">
               <Header />
+              <div className="flex-1 min-h-0 overflow-hidden h-full flex flex-col">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/user/:id/notifications" element={<NotificationsPage />} />
                 <Route path="/admin" element={<AdminPage />} />
               </Routes>
+              </div>
             <Toaster
               position="top-center"
               toastOptions={{
