@@ -23,6 +23,8 @@ export function LoginPage() {
         setErrorMsg(t("errors.accountLinkedToDifferentQR", "Этот Google аккаунт уже привязан к другому QR-коду."));
       } else if (errorParam === "google_account_exists") {
         setErrorMsg(t("errors.googleAccountExists", "Пользователь с таким Google аккаунтом уже существует."));
+      } else if (errorParam === "user_not_found") {
+        setErrorMsg(t("errors.userNotFound", "Пользователь с этим Google аккаунтом не зарегистрирован. Пожалуйста, отсканируйте QR-код для регистрации."));
       } else {
         setErrorMsg(t("loginPage.errorServer"));
       }

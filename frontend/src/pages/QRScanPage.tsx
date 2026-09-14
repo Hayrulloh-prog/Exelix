@@ -323,8 +323,11 @@ export function QRScanPage() {
                 </p>
                 <button
                   onClick={() => {
-                    const backendUrl = import.meta.env.VITE_API_URL || "/api";
-                    window.location.href = `${backendUrl}/v1/auth/google?qrToken=${qrToken}`;
+                    const apiUrl = import.meta.env.VITE_API_URL || "/api";
+                    const backendUrl = apiUrl.startsWith("http")
+                      ? apiUrl
+                      : `${window.location.origin}${apiUrl}`;
+                    window.location.assign(`${backendUrl}/v1/auth/google?qrToken=${qrToken}`);
                   }}
                   className="w-full flex justify-center items-center gap-3 px-4 py-3.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-white font-semibold shadow-sm transition-all duration-200 transform hover:-translate-y-0.5"
                 >

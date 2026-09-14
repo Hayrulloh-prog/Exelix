@@ -564,12 +564,19 @@ export const googleLogin = async (req: AuthRequest, res: Response) => {
   const qrToken = req.query.qrToken as string || "";
   const googleClientId = process.env.GOOGLE_CLIENT_ID;
   const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  const host = req.get('host');
+  let frontendUrl = process.env.CORS_ORIGIN || process.env.FRONTEND_URL || "http://localhost:3001";
+  if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
+    const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    frontendUrl = `${proto}://${host}`;
+  }
+
   if (!googleClientId || !googleClientSecret) {
     console.error("Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET in env variables");
-    return res.status(500).json({ success: false, message: "Google OAuth не сконфигурирован на сервере. Проверьте GOOGLE_CLIENT_ID и GOOGLE_CLIENT_SECRET в .env." });
+    return res.redirect(`${frontendUrl}/login?error=server_error`);
   }
   let redirectUri = process.env.GOOGLE_REDIRECT_URI || `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
-  const host = req.get('host');
   if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
     const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
     redirectUri = `${proto}://${host}/api/v1/auth/google/callback`;
