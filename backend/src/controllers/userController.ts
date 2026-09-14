@@ -4,6 +4,7 @@ import { query } from '../config/database';
 import { createError } from '../utils/errors';
 import sharp from 'sharp';
 import { uploadAvatarBuffer, isStorageAvailable } from '../services/storageService';
+import { savePushSubscription } from '../services/pushService';
 
 // Локализованные сообщения об ошибках
 const getLocalizedErrorMessage = (errorKey: string, language?: string): string => {
@@ -302,11 +303,20 @@ export const subscribePush = async (req: AuthRequest, res: Response) => {
   }
 
   const { subscription } = req.body;
+  const subObject = typeof subscription === 'string' ? JSON.parse(subscription) : subscription;
 
   await query(
     `UPDATE users SET push_subscription = $1, updated_at = NOW() WHERE id = $2`,
-    [JSON.stringify(subscription), req.user.userId]
+    [JSON.stringify(subObject), req.user.userId]
   );
+
+  if (subObject && subObject.endpoint && subObject.keys) {
+    try {
+      await savePushSubscription(req.user.userId, subObject);
+    } catch (err) {
+      console.error('Failed to save in push_subscriptions table:', err);
+    }
+  }
 
   res.json({
     success: true,

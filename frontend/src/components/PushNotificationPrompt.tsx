@@ -60,10 +60,8 @@ export function PushNotificationPrompt() {
       try {
         const registration = await navigator.serviceWorker.ready;
 
-        // В реальном приложении здесь должен быть VAPID public key
-        const applicationServerKey = urlB64ToUint8Array(
-          'BMz2tUeQQcBzXNUwZB9r2iQh6X5Jh5X6Jh5X6Jh5X6Jh5X6Jh5X6Jh5X6'
-        );
+        const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || 'BMtQbKRgvzh3MuF3V1TJAPJ79kJp279W4_Dn1fCoelpAF4rEIJXYGNBC9e0j4r9nLJzWitplpuboFe3Vj2BwL9g';
+        const applicationServerKey = urlB64ToUint8Array(vapidPublicKey);
 
         const subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
@@ -74,23 +72,23 @@ export function PushNotificationPrompt() {
         await sendSubscriptionToServer(subscription);
 
       } catch (error) {
+        console.error('Error subscribing to push:', error);
       }
     }
   };
 
   const sendSubscriptionToServer = async (subscription: any) => {
     try {
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       const token = localStorage.getItem('userToken') || localStorage.getItem('adminToken');
 
-      if (token && userData.id) {
-        await fetch(`${API_BASE_URL}/api/v1/users/${userData.id}/push-subscription`, {
+      if (token) {
+        await fetch(`${API_BASE_URL}/api/v1/users/push-subscribe`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(subscription)
+          body: JSON.stringify({ subscription })
         });
       }
     } catch (error) {
