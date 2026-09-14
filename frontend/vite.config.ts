@@ -10,6 +10,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        importScripts: ["/push-handler.js"],
       },
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
@@ -25,31 +26,19 @@ export default defineConfig({
         prefer_related_applications: false,
         icons: [
           {
-            src: "EX.svg",
+            src: "/EX.svg",
             sizes: "512x512",
             type: "image/svg+xml",
             purpose: "any maskable"
           },
           {
-            src: "icon-192.svg",
-            sizes: "192x192",
-            type: "image/svg+xml",
-            purpose: "any maskable"
-          },
-          {
-            src: "icon-512.svg",
-            sizes: "512x512",
-            type: "image/svg+xml",
-            purpose: "any maskable"
-          },
-          {
-            src: "icon-192.png",
+            src: "/EX-192.png",
             sizes: "192x192",
             type: "image/png",
             purpose: "any maskable"
           },
           {
-            src: "icon-512.png",
+            src: "/EX-512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable"
